@@ -4,6 +4,7 @@ Dicegame in Python
 
 
 This is a short dice game as requested for a trainee evaluation.
+Program is written in Python 3.5.1
 
 
 Description
