@@ -8,6 +8,7 @@ from game_states import *
 
 import pygame
 
+
 class Game(object):
 	"""	This is where the main gameloop runs.
 		:param machine = Creates an instance of StateMachine."""
@@ -16,10 +17,12 @@ class Game(object):
 
 		pygame.init()
 		self.machine = StateMachine()
+		self.display_w = 800
+		self.display_h = 600
 
 	def run(self):
 
-		self.display = pygame.display.set_mode((800,600))
+		self.display = pygame.display.set_mode((self.display_w,self.display_h))
 		pygame.display.set_caption('The DiceGame')
 		self.clock = pygame.time.Clock()
 
@@ -31,3 +34,5 @@ class Game(object):
 			self.machine.update()
 			self.machine.draw()
 			self.clock.tick(30)
+
+		pygame.quit()
