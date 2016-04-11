@@ -4,7 +4,14 @@
 # DiceGame
 
 import random
+import pygame
 from state import State
+
+#Color scheme
+BLACK = (0,0,0)
+BLUE = (82, 101, 222)
+GREEN = (82, 222, 133)
+PINK = (222, 82, 171)
 
 class IntroState(State):
 	"""IntroState"""
@@ -13,8 +20,21 @@ class IntroState(State):
 		self.machine = machine
 		self.display = display
 
+		#Set BackGround
+		#Set fonts and menu items
+
 	def update(self):
 
+		for event in pygame.event.get():
+
+			if event.type == pygame.QUIT:
+				self.machine.quit()
+
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_SPACE:
+					self.nextSt = GameState(self.machine, self.display)
+
+		"""
 		print("")
 		print(" ---- ")
 		print("Welcome to DiceGame")
@@ -46,9 +66,13 @@ class IntroState(State):
 			input()
 			print("")
 			self.machine.quit()
+	"""
 
 	def draw(self):
-		pass
+
+		self.display.fill(BLUE)
+		# Draw updates onto display
+		pygame.display.update()
 
 
 class GameState(State):
@@ -99,7 +123,10 @@ class GameState(State):
 			self.nextSt = MenuState(self.machine, self.display)
 
 	def draw(self):
-		pass
+
+		self.display.fill(PINK)
+		# Draw updates onto display
+		pygame.display.update()
 
 
 class MenuState(State):
@@ -138,4 +165,7 @@ class MenuState(State):
 			self.machine.quit()
 
 	def draw(self):
-		pass
+
+		self.display.fill(GREEN)
+		# Draw updates onto display
+		pygame.display.update()
