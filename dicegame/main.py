@@ -4,7 +4,7 @@
 from dicegame import Game
 
 def main():
-	game = Game
+	game = Game()
 	game.run()
 
 if __name__ == '__main__':
