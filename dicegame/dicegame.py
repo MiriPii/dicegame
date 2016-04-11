@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# Author: Miri Piiroinen
+# DiceGame
 
-from state_manager import StateMachine
-from menu_state import MenuState
-
+from state_machine import StateMachine
+from game_states import *
 
 class Game(object):
-	"""Inits the StateMachine.
-	This is where the main gameloop runs."""
+	"""	This is where the main gameloop runs.
+		:param machine = Creates an instance of StateMachine."""
 
 	def __init__(self):
 		self.machine = StateMachine()
@@ -22,10 +23,10 @@ class Game(object):
 		create window
 		'''
 
-		self.machine.load(MenuState)
+		self.machine.load(IntroState(self.machine))
 
-		while len(self.machine.running):
+		while self.machine.isRunning():
 
 			self.machine.nextState()
-			self.machine.update( dt )
+			self.machine.update()
 			self.machine.draw()
