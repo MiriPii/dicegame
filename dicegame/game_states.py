@@ -3,16 +3,18 @@
 # Author: Miri Piiroinen
 # DiceGame
 
-from state import State
 import random
+from state import State
 
 class IntroState(State):
 	"""IntroState"""
-	def __init__(self, machine):
-		super(IntroState, self).__init__(machine)
+	def __init__(self, machine, display):
+		super(IntroState, self).__init__(machine,display)
 		self.machine = machine
+		self.display = display
 
 	def update(self):
+
 		print("")
 		print(" ---- ")
 		print("Welcome to DiceGame")
@@ -34,7 +36,7 @@ class IntroState(State):
 		if answer.lower() == 'y':
 			print("")
 			print("")
-			self.nextSt = GameState(self.machine)
+			self.nextSt = GameState(self.machine, self.display)
 		else:
 			print("Sad to see you go!")
 			print("Good day to you and don't forget to smile!")
@@ -52,9 +54,10 @@ class IntroState(State):
 class GameState(State):
 	"""GameState"""
 
-	def __init__(self, machine):
-		super(GameState, self).__init__(machine)
+	def __init__(self, machine, display):
+		super(GameState, self).__init__(machine,display)
 		self.machine = machine
+		self.display = display
 
 	def update(self):
 
@@ -93,7 +96,7 @@ class GameState(State):
 			game_finished = True
 
 		if game_finished:
-			self.nextSt = MenuState(self.machine)
+			self.nextSt = MenuState(self.machine, self.display)
 
 	def draw(self):
 		pass
@@ -102,9 +105,10 @@ class GameState(State):
 class MenuState(State):
 	"""MenuState"""
 
-	def __init__(self, machine):
-		super(MenuState, self).__init__(machine)
+	def __init__(self, machine, display):
+		super(MenuState, self).__init__(machine, display)
 		self.machine = machine
+		self.display = display
 
 	def update(self):
 		print("")
@@ -123,7 +127,7 @@ class MenuState(State):
 			print("------------")
 			print("Great! I wish you the best luck!")
 			input("Press any key to start the game.")
-			self.nextSt = GameState(self.machine)
+			self.nextSt = GameState(self.machine, self.display)
 		else:
 			print("")
 			print("------------")

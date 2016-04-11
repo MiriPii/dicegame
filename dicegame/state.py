@@ -9,10 +9,10 @@ class State(object):
 		:func update = Step forward in time and update modified parameters
 		:func draw = Draw the visuals into the specified window."""
 
-	def __init__(self, machine):
+	def __init__(self, machine, window):
 
 		self.machine = machine
-		# self.window = window
+		self.window = window
 		self.nextSt = None
 
 	def update(self):
