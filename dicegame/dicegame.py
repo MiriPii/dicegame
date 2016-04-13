@@ -38,4 +38,9 @@ class Game(object):
             if (len(self.machine.states) > 1):
                 print("Machinestates: '{}'".format(self.machine.states))
 
+        print("")
+        print("----------------")
+        print("DiceGame succesfully terminated.")
+        print("Now clearing pygame.")
+        print("")
         pygame.quit()
