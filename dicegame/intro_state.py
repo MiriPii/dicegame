@@ -4,6 +4,7 @@
 # DiceGame
 
 import pygame
+import random
 import game_state
 from state import State
 
@@ -18,13 +19,15 @@ class IntroState(State):
     """IntroState"""
     def __init__(self, machine, display):
 
-        # Debug helper
-        self.init = True
-        print(" IntroState INIT ")
-
         super(IntroState, self).__init__(machine, display)
         self.machine = machine
         self.display = display
+
+        # Debug helper
+        self.init = True
+        print("")
+        print("----------------")
+        print(" IntroState INIT ")
 
         # Set BackGround
         self.bg = pygame.Surface(self.display.get_size())
@@ -132,7 +135,7 @@ class IntroState(State):
                 elif event.key == pygame.K_RETURN:
 
                     if self.hl_pos == 0:
-                        self.nextST = game_state.GameState(self.machine, self.display)
+                        self.nextSt = game_state.GameState(self.machine, self.display)
                     elif self.hl_pos == 1:
                         self.machine.quit()
 
@@ -145,7 +148,7 @@ class IntroState(State):
         pygame.display.flip()
         pygame.display.update()
 
-'''
+
 class GameState(State):
     """GameState"""
 
@@ -242,4 +245,4 @@ class MenuState(State):
         self.display.fill(GREEN)
         # Draw updates onto display
         pygame.display.update()
-'''
+
