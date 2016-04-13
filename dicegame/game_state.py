@@ -24,8 +24,40 @@ class GameState(State):
         self.display = display
 
         # Debug helpers
+        print("")
+        print("----------------")
         print(" GameState INIT ")
         self.init = True
+
+        # Set BackGround
+        self.bg = pygame.Surface(self.display.get_size())
+        self.bg = self.bg.convert()
+        self.bg.fill(PINK)
+
+        # Screen size
+        scr_w = self.bg.get_width()
+        scr_h = self.bg.get_height()
+
+        # Set fonts and menu items
+        font_path = "./../fonts/"
+        self.text_font = pygame.font.Font(None, 24)
+
+        # Set instructions
+        self.info = self.text_font.render("This is test screen. ESC to QUIT.",
+                                        0, BLACK)
+        self.inforect = self.info.get_rect()
+        self.inforect.centerx = self.bg.get_rect().centerx
+        self.inforect.y = scr_h-80
+
+        self.info2 = self.text_font.render("Press SPACE-key to load next state.", 0, BLACK)
+        self.info2rect = self.info2.get_rect()
+        self.info2rect.centerx = self.bg.get_rect().centerx
+        self.info2rect.y = scr_h-50
+        self.bg.blit(self.info, self.inforect)
+        self.bg.blit(self.info2, self.info2rect)
+
+        # Draw the initial display
+        self.display.blit(self.bg, (0, 0))
 
     def update(self):
         if self.init is True:
@@ -86,8 +118,9 @@ class GameState(State):
     def draw(self):
         if self.init is True:
             print(" GameState draw called ")
+            print(" GameState working normally ")
             self.init = False
 
-        self.display.fill(PINK)
         # Draw updates onto display
+        pygame.display.flip()
         pygame.display.update()
