@@ -5,6 +5,10 @@ from dicegame import Game
 
 
 def main():
+    print("  __________________  ")
+    print(" | DiceGame started | ")
+    print(" |__________________| ")
+    print("")
     game = Game()
     game.run()
 
