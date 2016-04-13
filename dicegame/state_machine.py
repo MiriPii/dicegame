@@ -24,10 +24,12 @@ class StateMachine:
     def nextState(self):
 
         if len(self.states) != 0:
+
             temp = self.states[len(self.states)-1].getNext()
 
-            if (temp != None):
+            if (temp is not None):
 
+                self.states.pop()
                 self.states.append(temp)
 
     def update(self):
@@ -35,5 +37,5 @@ class StateMachine:
         self.states[len(self.states)-1].update()
 
     def draw(self):
-        #Allows the state to draw to the active window
+        # Allows the state to draw to the active window
         self.states[len(self.states)-1].draw()
