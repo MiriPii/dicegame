@@ -3,8 +3,8 @@
 # Author: Miri Piiroinen
 # DiceGame
 
-import random
 import pygame
+import game_state
 from state import State
 
 # Color scheme
@@ -17,6 +17,11 @@ PINK = (222, 82, 171)
 class IntroState(State):
     """IntroState"""
     def __init__(self, machine, display):
+
+        # Debug helper
+        self.init = True
+        print(" IntroState INIT ")
+
         super(IntroState, self).__init__(machine, display)
         self.machine = machine
         self.display = display
@@ -29,6 +34,9 @@ class IntroState(State):
         # Screen size
         scr_w = self.bg.get_width()
         scr_h = self.bg.get_height()
+
+        # Menu traverse helper
+        self.hl_pos = 0
 
         # Set fonts and menu items
         font_path = "./../fonts/"
@@ -45,28 +53,29 @@ class IntroState(State):
         self.bg.blit(self.title, self.titlepos)
 
         # Set instructions
-        self.info = self.text_font.render("Use UP and DOWN to move.",
+        self.info = self.text_font.render("Use UP and DOWN Arrows to select.",
                                         0, BLACK)
         self.inforect = self.info.get_rect()
         self.inforect.centerx = self.bg.get_rect().centerx
-        self.inforect.y = self.titlepos.y+80
+        self.inforect.y = scr_h-80
 
-        self.info2 = self.text_font.render("Press Return-key to confirm selection.", 0, BLACK)
+        self.info2 = self.text_font.render("Press Return-key to confirm your selection.", 0, BLACK)
         self.info2rect = self.info2.get_rect()
         self.info2rect.centerx = self.bg.get_rect().centerx
-        self.info2rect.y = self.inforect.y+30
+        self.info2rect.y = scr_h-50
         self.bg.blit(self.info, self.inforect)
         self.bg.blit(self.info2, self.info2rect)
-
-        # Set temporary bg, so menuitems can be changed
-        self.tempbg = self.bg
 
         # Set items
         self.start = self.font.render("Start Game", 0, BLACK)
         self.start_hl = self.font_hl.render("Start Game", 0, BLACK)
         self.quit = self.font.render("QUIT", 0, BLACK)
         self.quit_hl = self.font_hl.render("QUIT", 0, BLACK)
-
+        """
+        # Cursor : WIP
+        self.cursor_l = self.font.render(">", True, BLACK)
+        self.cursor_r = self.font.render("<", True, BLACK)
+        """
         # Set locations for the menu items
         self.startrect = self.start.get_rect()
         self.quitrect = self.quit.get_rect()
@@ -76,33 +85,36 @@ class IntroState(State):
         # Set y
         self.startrect.y = scr_h//2
         self.quitrect.y = scr_h//2+80
-        # Draw the menu items to temp bg
-        self.tempbg.blit(self.start_hl, self.startrect)
-        self.tempbg.blit(self.quit, self.quitrect)
+
+        """ Making cursor wrap around selections
+        # Wrap cursors around
+        self.cursor_l_rect = self.cursor_l.get_rect()
+        self.cursor_l_rect.x = self.
+        self.cursor_r_rect = self.cursor_r.get_rect()
+        """
 
         # Draw the initial display
-        self.display.blit(self.tempbg, (0, 0))
-        pygame.display.flip()
-
-        # Menu traverse helper
-        self.hl_pos = 0
+        self.display.blit(self.bg, (0, 0))
+        self.display.blit(self.start_hl, self.startrect)
+        self.display.blit(self.quit, self.quitrect)
 
     def move(self, direction):
 
-        self.tempbg = self.bg
-        if ((direction == pygame.K_DOWN) and (self.hl_pos != 1)):
+        self.display.fill(BLUE)
+        if (direction == pygame.K_DOWN):
             self.hl_pos = 1
-            self.tempbg.blit(self.start, self.startrect)
-            self.tempbg.blit(self.quit_hl, self.quitrect)
-        if ((direction == pygame.K_UP) and (self.hl_pos != 0)):
+            self.display.blit(self.bg, (0, 0))
+            self.display.blit(self.start, self.startrect)
+            self.display.blit(self.quit_hl, self.quitrect)
+        elif (direction == pygame.K_UP):
             self.hl_pos = 0
-            self.tempbg.blit(self.start_hl, self.startrect)
-            self.tempbg.blit(self.quit, self.quitrect)
-
-        print(self.hl_pos)
-
+            self.display.blit(self.bg, (0, 0))
+            self.display.blit(self.start_hl, self.startrect)
+            self.display.blit(self.quit, self.quitrect)
 
     def update(self):
+        if self.init is True:
+            print(" IntroState update called ")
 
         for event in pygame.event.get():
 
@@ -120,20 +132,20 @@ class IntroState(State):
                 elif event.key == pygame.K_RETURN:
 
                     if self.hl_pos == 0:
-                        self.nextST = GameState(self.machine, self.display)
+                        self.nextST = game_state.GameState(self.machine, self.display)
                     elif self.hl_pos == 1:
                         self.machine.quit()
 
     def draw(self):
-
-        self.display.fill(BLUE)
-        self.display.blit(self.tempbg, (0, 0))
+        if self.init is True:
+            print(" IntroState draw called ")
+            self.init = False
 
         # Draw updates onto display
         pygame.display.flip()
         pygame.display.update()
 
-
+'''
 class GameState(State):
     """GameState"""
 
@@ -230,3 +242,4 @@ class MenuState(State):
         self.display.fill(GREEN)
         # Draw updates onto display
         pygame.display.update()
+'''

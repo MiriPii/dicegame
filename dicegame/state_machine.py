@@ -6,34 +6,34 @@
 
 class StateMachine:
 
-	def __init__(self):
-		self.running = False
-		self.states = []
+    def __init__(self):
+        self.running = False
+        self.states = []
 
-	def load(self, state):
+    def load(self, state):
 
-		self.running = True
-		self.states.append(state)
+        self.running = True
+        self.states.append(state)
 
-	def isRunning(self):
-		return self.running
+    def isRunning(self):
+        return self.running
 
-	def quit(self):
-		self.running = False
+    def quit(self):
+        self.running = False
 
-	def nextState(self):
+    def nextState(self):
 
-		if len(self.states) != 0:
-			temp = self.states[len(self.states)-1].getNext()
+        if len(self.states) != 0:
+            temp = self.states[len(self.states)-1].getNext()
 
-			if (temp != None):
+            if (temp != None):
 
-				self.states.append(temp)
+                self.states.append(temp)
 
-	def update(self):
-		# Allows the state to update the game
-		self.states[len(self.states)-1].update()
+    def update(self):
+        # Allows the state to update the game
+        self.states[len(self.states)-1].update()
 
-	def draw(self):
-		#Allows the state to draw to the active window
-		self.states[len(self.states)-1].draw()
+    def draw(self):
+        #Allows the state to draw to the active window
+        self.states[len(self.states)-1].draw()

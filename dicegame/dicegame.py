@@ -4,35 +4,38 @@
 # DiceGame
 
 from state_machine import StateMachine
-from game_states import *
+import intro_state
 
 import pygame
 
 
 class Game(object):
-	"""	This is where the main gameloop runs.
-		:param machine = Creates an instance of StateMachine."""
+    """ This is where the main gameloop runs.
+        :param machine = Creates an instance of StateMachine."""
 
-	def __init__(self):
+    def __init__(self):
 
-		pygame.init()
-		self.machine = StateMachine()
-		self.display_w = 800
-		self.display_h = 600
+        pygame.init()
+        self.machine = StateMachine()
+        self.display_w = 800
+        self.display_h = 600
 
-	def run(self):
+    def run(self):
 
-		self.display = pygame.display.set_mode((self.display_w,self.display_h))
-		pygame.display.set_caption('The DiceGame')
-		self.clock = pygame.time.Clock()
+        self.display = pygame.display.set_mode((self.display_w,self.display_h))
+        pygame.display.set_caption('The DiceGame')
+        self.clock = pygame.time.Clock()
 
-		self.machine.load(IntroState(self.machine, self.display))
+        self.machine.load(intro_state.IntroState(self.machine, self.display))
 
-		while self.machine.isRunning():
+        while self.machine.isRunning():
 
-			self.machine.nextState()
-			self.machine.update()
-			self.machine.draw()
-			self.clock.tick(30)
+            self.machine.nextState()
+            self.machine.update()
+            self.machine.draw()
+            self.clock.tick(30)
+            # Debug
+            if (len(self.machine.states) > 1):
+                print("Machinestates: '{}'".format(self.machine.states))
 
-		pygame.quit()
+        pygame.quit()
