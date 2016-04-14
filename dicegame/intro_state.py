@@ -74,11 +74,7 @@ class IntroState(State):
         self.start_hl = self.font_hl.render("Start Game", 0, BLACK)
         self.quit = self.font.render("QUIT", 0, BLACK)
         self.quit_hl = self.font_hl.render("QUIT", 0, BLACK)
-        """
-        # Cursor : WIP
-        self.cursor_l = self.font.render(">", True, BLACK)
-        self.cursor_r = self.font.render("<", True, BLACK)
-        """
+
         # Set locations for the menu items
         self.startrect = self.start.get_rect()
         self.quitrect = self.quit.get_rect()
@@ -89,6 +85,11 @@ class IntroState(State):
         self.startrect.y = scr_h//2
         self.quitrect.y = scr_h//2+80
 
+        """
+        # Cursor : WIP
+        self.cursor_l = self.font.render(">", True, BLACK)
+        self.cursor_r = self.font.render("<", True, BLACK)
+        """
         """ Making cursor wrap around selections
         # Wrap cursors around
         self.cursor_l_rect = self.cursor_l.get_rect()
