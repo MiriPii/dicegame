@@ -165,26 +165,29 @@ class GameState(State):
                 self.nextSt = menu_state.MenuState(self.machine, self.display)
 
     def draw(self):
+        # Debugging helpers
         if self.init is True:
             print(" GameState draw called ")
             print(" GameState working normally ")
             self.init = False
 
-        elif self.phases[self.gamephase] == "quess":
-            self.display.fill(PINK)
-            self.display.blit(self.bg, (0, 0))
-            self.display.blit(self.quesses[self.quessnum], (500, self.your_quesspos.y))
+        self.display.fill(PINK)
+        self.display.blit(self.bg, (0, 0))
+        self.display.blit(self.quesses[self.quessnum], (500, self.your_quesspos.y))
+
+        if self.phases[self.gamephase] == "quess":
             for i in range(3):
                 self.display.blit(self.rules[i], self.rulespos[i])
 
         elif self.phases[self.gamephase] == "roll":
+            for i in range(3):
+                self.display.blit(self.rules[i], self.rulespos[i])
+
             self.display.blit(self.dice[self.dice1_val-1], self.dice1_pos)
             self.display.blit(self.dice[self.dice2_val-1], self.dice2_pos)
             time.sleep(0.2)
 
         elif self.phases[self.gamephase] == "result":
-            self.display.fill(PINK)
-            self.display.blit(self.bg, (0, 0))
             self.display.blit(self.quesses[self.quessnum], (500, self.your_quesspos.y))
             self.display.blit(self.dice[self.dice1_val-1], self.dice1_pos)
             self.display.blit(self.dice[self.dice2_val-1], self.dice2_pos)
