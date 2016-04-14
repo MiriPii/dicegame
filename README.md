@@ -19,10 +19,11 @@ Install pygame, if you don't have it yet:
 Guidance for installing pygame can be found at:  
 http://www.pygame.org/download.shtml
 
-### Running the game
+### How To Launch
 Go to the `$REPOPATH/dicegame/`  
-And run the `main.py` from this folder :  
-i.e. In linux 
+And run the `main.py` from this folder :
+
+i.e. In linux you would do:
 ```
 ~/$REPOPATH/dicegame/ > $ python3.5 main.py
 ```
