@@ -45,7 +45,7 @@ class GameState(State):
         self.dice2_val = 0
         self.rollcount = 0
 
-        # Set fonts and menu items
+        # Set fonts
         font_path = "./../fonts/"
         self.text_font = pygame.font.Font(None, 24)
         self.quess_font = pygame.font.Font(None, 38)
