@@ -1,20 +1,20 @@
 # Dicegame in Python
 
-This is a short dice game as requested for a trainee evaluation.
+This is a short dice game as requested for a trainee evaluation.  
 The game is rather simple dice simulation,
 where user tries to quess the sum of two dice.
 
-Program is written in Python 3.5.1.
+Program is written in Python 3.5.1.  
 Visuals were made with pygame 1.9.2.
 
 ### Installation
-
-1. Clone this repository, by running
+Clone this repository, by running:
 ```
 git clone https://github.com/MiriPii/dicegame.git
 ```
-2. You need pygame installed.
-Guidance for installing pygame can be found at:
+Install pygame, if don't have it:
+
+Guidance for installing pygame can be found at:  
 http://www.pygame.org/download.shtml
 
 ### Description
