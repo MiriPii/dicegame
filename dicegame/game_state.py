@@ -33,7 +33,7 @@ class GameState(State):
         # Set BackGround
         self.bg = pygame.Surface(self.display.get_size())
         self.bg = self.bg.convert()
-        self.bg.fill(PINK)
+        self.bg.fill(BLUE)
 
         # Variables
         scr_w = self.bg.get_width()     # Screen width
@@ -171,7 +171,7 @@ class GameState(State):
             print(" GameState working normally ")
             self.init = False
 
-        self.display.fill(PINK)
+        self.display.fill(BLUE)
         self.display.blit(self.bg, (0, 0))
         self.display.blit(self.quesses[self.quessnum], (500, self.your_quesspos.y))
 
