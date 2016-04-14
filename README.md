@@ -5,7 +5,9 @@ The game is rather simple dice simulation,
 where user tries to quess the sum of two dice.
 
 Program is written in Python 3.5.1.  
-Visuals were made with pygame 1.9.2.
+Visuals were made with pygame 1.9.2.  
+
+The game is built around a simple state machine.
 
 ### Installation
 Clone this repository, by running:
