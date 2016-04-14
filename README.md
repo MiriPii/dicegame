@@ -24,7 +24,7 @@ Go to the `$REPOPATH/dicegame/`
 And run the `main.py` from this folder :
 
 i.e. In linux you would do:
-```
+```sh
 ~/$REPOPATH/dicegame/ > $ python3.5 main.py
 ```
 
