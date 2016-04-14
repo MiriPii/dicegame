@@ -68,40 +68,34 @@ class MenuState(State):
         self.bg.blit(self.info, self.inforect)
         self.bg.blit(self.info2, self.info2rect)
 
-        # Set items
+        # Set menu elements
         self.start = self.font.render("Play Again", 0, BLACK)
-        self.start_hl = self.font_hl.render("Play Again", 0, BLACK)
+        self.start_hl = self.font_hl.render("> Play Again <", 0, BLACK)
         self.quit = self.font.render("QUIT", 0, BLACK)
-        self.quit_hl = self.font_hl.render("QUIT", 0, BLACK)
-        # Set locations for the menu items
-        self.startrect = self.start.get_rect()
-        self.quitrect = self.quit.get_rect()
-        # Center x
-        self.startrect.centerx = self.bg.get_rect().centerx
-        self.quitrect.centerx = self.bg.get_rect().centerx
-        # Set y
-        self.startrect.y = scr_h//2
-        self.quitrect.y = scr_h//2+80
-
-        """
-        # Cursor : WIP
-        self.cursor_l = self.font.render(">", True, BLACK)
-        self.cursor_r = self.font.render("<", True, BLACK)
-        """
-        """ Making cursor wrap around selections
-        # Wrap cursors around
-        self.cursor_l_rect = self.cursor_l.get_rect()
-        self.cursor_l_rect.x = self.
-        self.cursor_r_rect = self.cursor_r.get_rect()
-        """
+        self.quit_hl = self.font_hl.render("> QUIT <", 0, BLACK)
+            # Set locations for the menu elements
+        self.start_rect = self.start.get_rect()
+        self.start_hl_rect = self.start_hl.get_rect()
+        self.quit_rect = self.quit.get_rect()
+        self.quit_hl_rect = self.quit_hl.get_rect()
+            # Center x
+        self.start_rect.centerx = self.bg.get_rect().centerx
+        self.start_hl_rect.centerx = self.bg.get_rect().centerx
+        self.quit_rect.centerx = self.bg.get_rect().centerx
+        self.quit_hl_rect.centerx = self.bg.get_rect().centerx
+            # Set y
+        self.start_rect.y = scr_h//2
+        self.start_hl_rect.y = scr_h//2
+        self.quit_rect.y = scr_h//2+80
+        self.quit_hl_rect.y = scr_h//2+80
 
         # Draw the initial display
         self.display.blit(self.bg, (0, 0))
-        self.display.blit(self.start_hl, self.startrect)
-        self.display.blit(self.quit, self.quitrect)
+        self.display.blit(self.start_hl, self.start_hl_rect)
+        self.display.blit(self.quit, self.quit_rect)
 
     def move(self, direction):
-        """ Helper function to move between menu elements"""
+        """ Helper function to move between menu elements. """
         if (direction == pygame.K_DOWN):
             self.hl_pos = 1
         elif (direction == pygame.K_UP):
@@ -142,11 +136,11 @@ class MenuState(State):
         self.display.blit(self.bg, (0, 0))                    # Draw background
 
         if self.hl_pos == 1:                                # #
-            self.display.blit(self.start, self.startrect)     #
-            self.display.blit(self.quit_hl, self.quitrect)    # Draw menu elements
+            self.display.blit(self.start, self.start_rect)     #
+            self.display.blit(self.quit_hl, self.quit_hl_rect)    # Draw menu elements
         else:                                                 #
-            self.display.blit(self.start_hl, self.startrect)  #
-            self.display.blit(self.quit, self.quitrect)     # #
+            self.display.blit(self.start_hl, self.start_hl_rect)  #
+            self.display.blit(self.quit, self.quit_rect)     # #
 
         # Draw updates onto display
         pygame.display.flip()
