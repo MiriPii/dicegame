@@ -102,18 +102,11 @@ class IntroState(State):
         self.display.blit(self.quit, self.quitrect)
 
     def move(self, direction):
-
-        self.display.fill(BLUE)
+        """ Helper function to move between menu elements"""
         if (direction == pygame.K_DOWN):
             self.hl_pos = 1
-            self.display.blit(self.bg, (0, 0))
-            self.display.blit(self.start, self.startrect)
-            self.display.blit(self.quit_hl, self.quitrect)
         elif (direction == pygame.K_UP):
             self.hl_pos = 0
-            self.display.blit(self.bg, (0, 0))
-            self.display.blit(self.start_hl, self.startrect)
-            self.display.blit(self.quit, self.quitrect)
 
     def update(self):
         if self.init is True:
@@ -143,6 +136,16 @@ class IntroState(State):
         if self.init is True:
             print(" IntroState draw called ")
             self.init = False
+
+        self.display.fill(BLUE)                               # Clear screen
+        self.display.blit(self.bg, (0, 0))                    # Draw background
+
+        if self.hl_pos == 1:                                # #
+            self.display.blit(self.start, self.startrect)     #
+            self.display.blit(self.quit_hl, self.quitrect)    # Draw menu elements
+        else:                                                 #
+            self.display.blit(self.start_hl, self.startrect)  #
+            self.display.blit(self.quit, self.quitrect)     # #
 
         # Draw updates onto display
         pygame.display.flip()
