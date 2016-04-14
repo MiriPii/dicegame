@@ -43,14 +43,20 @@ class GameState(State):
         self.dice_sum = 0
         self.dice1_val = 0
         self.dice2_val = 0
-        self.dice1_pos = (self.bg.get_rect().centerx-80, self.bg.get_rect().centery+100)
-        self.dice2_pos = (self.bg.get_rect().centerx+80, self.bg.get_rect().centery+100)
         self.rollcount = 0
 
         # Set fonts and menu items
         font_path = "./../fonts/"
         self.text_font = pygame.font.Font(None, 24)
         self.quess_font = pygame.font.Font(None, 38)
+        self.title_font = pygame.font.Font(font_path+"justice.ttf", 80)
+        self.title_font.set_underline(True)
+
+        # Set Title
+        self.title = self.title_font.render("DiceGame", True, BLACK)
+        self.titlepos = self.title.get_rect()
+        self.titlepos.centerx = self.bg.get_rect().centerx
+        self.bg.blit(self.title, self.titlepos)
 
         # Set possible quesses
         self.quesses = []
@@ -60,33 +66,47 @@ class GameState(State):
                                         0, BLACK))
 
         # Set instructions and static bg
+        self.rules = []
+        self.rulespos = []
+        self.rules.append(self.text_font.render("INSTRUCTIONS:",
+                                        0, BLACK))
+        self.rules.append(self.text_font.render("Your object is to quess the total of two dice rolls.",
+                                        0, BLACK))
+        self.rules.append(self.text_font.render("Input your quess to the box [2-12] and confirm with Return-key.",
+                                        0, BLACK))
+        for rule in self.rules:
+            self.rulespos.append(rule.get_rect())
+            counter = len(self.rulespos)-1
+            self.rulespos[counter].centerx = self.bg.get_rect().centerx
+            self.rulespos[counter].y = scr_h-80+(counter*30)
 
-        rules = []
-        rulesrect = []
-        rules.append(self.text_font.render("INSTRUCTIONS:",
-                                        0, BLACK))
-        rules.append(self.text_font.render("Your object is to quess the total of two dice rolls.",
-                                        0, BLACK))
-        rules.append(self.text_font.render("Input your quess to the box [2-12] and confirm with Return-key.",
-                                        0, BLACK))
-        for rule in rules:
-            rulesrect.append(rule.get_rect())
-            counter = len(rulesrect)-1
-            rulesrect[counter].centerx = self.bg.get_rect().centerx
-            rulesrect[counter].y = scr_h-80+(counter*30)
-
-        for i in range(3):
-            self.bg.blit(rules[i], rulesrect[i])
         # Static line reading 'Your quess: ___'
         your_quess = self.quess_font.render("Your quess: ___", 0, BLACK)
-        your_quessrect = your_quess.get_rect()
-        your_quessrect.centerx = self.bg.get_rect().centerx+30
-        your_quessrect.y = 200
-        self.bg.blit(your_quess, your_quessrect)
+        self.your_quesspos = your_quess.get_rect()
+        self.your_quesspos.centerx = self.bg.get_rect().centerx+30
+        self.your_quesspos.y = 150
+        self.bg.blit(your_quess, self.your_quesspos)
 
-        # Draw the initial display
-        self.display.blit(self.bg, (0, 0))
-        self.display.blit(self.quesses[0], (500, 200) )
+        # Line for dice sum ('Result: ')
+        self.result_line = self.quess_font.render("Result: ", True, BLACK)
+        self.result_linepos = self.result_line.get_rect()
+        self.result_linepos.centerx = self.your_quesspos.centerx
+        self.result_linepos.y = self.your_quesspos.y+200
+
+        # Result notifications
+        self.result_win = self.quess_font.render("Congratulations! You answered correctly!", True, BLACK)
+        self.result_lose = self.quess_font.render("Too bad! Your quess was wrong!", True, BLACK)
+        self.result_help = self.text_font.render("Press any key to continue.", True, BLACK)
+            # Result text positions
+        self.result_win_pos = self.result_win.get_rect()
+        self.result_lose_pos = self.result_lose.get_rect()
+        self.result_help_pos = self.result_help.get_rect()
+        self.result_win_pos.centerx = self.bg.get_rect().centerx
+        self.result_lose_pos.centerx = self.bg.get_rect().centerx
+        self.result_help_pos.centerx = self.bg.get_rect().centerx
+        self.result_win_pos.y = scr_h-80
+        self.result_lose_pos.y = scr_h-80
+        self.result_help_pos.y = scr_h-80+30
 
         # Create Dice phases
         self.dice_sheet = pygame.image.load("../img/dice_cropped.png")
@@ -97,27 +117,27 @@ class GameState(State):
             self.dice.append(self.dicecrop)
             self.dice[i].blit(self.dice_sheet, (0, 0), (i*53, 0, 53, 54))
         self.counter = 0
+        self.dice1_pos = (self.bg.get_rect().centerx-80, self.your_quesspos.y+100)
+        self.dice2_pos = (self.bg.get_rect().centerx+80, self.your_quesspos.y+100)
+
+        # Draw the initial display
+        self.display.blit(self.bg, (0, 0))
+        self.display.blit(self.quesses[0], (500, self.your_quesspos.y) )
+        for i in range(3):
+            self.display.blit(self.rules[i], self.rulespos[i])
 
     def update(self):
         if self.init is True:
             print(" GameState update called ")
 
         if self.phases[self.gamephase] == "roll":
-            if self.rollcount < 20:
+            if self.rollcount < 10:
                 self.dice1_val = random.randint(1, 6)
                 self.dice2_val = random.randint(1, 6)
                 self.rollcount+=1
             else:
                 self.dice_sum = self.dice1_val+self.dice2_val
                 self.gamephase=2
-
-        if self.phases[self.gamephase] == "result":
-            if self.dice_sum == self.quessnum+2:
-                print("Congratz! You win! You quessed: {}".format(self.quessnum+2))
-                print("                The answer was: {}".format(self.dice_sum))
-            else:
-                print("Too Bad! You lost! You quessed: {}".format(self.quessnum+2))
-                print("                The answer was: {}".format(self.dice_sum))
 
         for event in pygame.event.get():
 
@@ -132,18 +152,12 @@ class GameState(State):
                             self.quessnum = 10
                         else:
                             self.quessnum += 1
-                        self.display.fill(PINK)
-                        self.display.blit(self.bg, (0, 0))
-                        self.display.blit(self.quesses[self.quessnum], (500, 200))
 
                     elif event.key == pygame.K_DOWN:
                         if self.quessnum <= 0:
                             self.quessnum = 0
                         else:
                             self.quessnum -= 1
-                        self.display.fill(PINK)
-                        self.display.blit(self.bg, (0, 0))
-                        self.display.blit(self.quesses[self.quessnum], (500, 200))
 
                     elif event.key == pygame.K_RETURN:
                         self.gamephase = 1
@@ -156,10 +170,32 @@ class GameState(State):
             print(" GameState working normally ")
             self.init = False
 
-        if self.phases[self.gamephase] == "roll":
+        elif self.phases[self.gamephase] == "quess":
+            self.display.fill(PINK)
+            self.display.blit(self.bg, (0, 0))
+            self.display.blit(self.quesses[self.quessnum], (500, self.your_quesspos.y))
+            for i in range(3):
+                self.display.blit(self.rules[i], self.rulespos[i])
+
+        elif self.phases[self.gamephase] == "roll":
             self.display.blit(self.dice[self.dice1_val-1], self.dice1_pos)
             self.display.blit(self.dice[self.dice2_val-1], self.dice2_pos)
             time.sleep(0.2)
+
+        elif self.phases[self.gamephase] == "result":
+            self.display.fill(PINK)
+            self.display.blit(self.bg, (0, 0))
+            self.display.blit(self.quesses[self.quessnum], (500, self.your_quesspos.y))
+            self.display.blit(self.dice[self.dice1_val-1], self.dice1_pos)
+            self.display.blit(self.dice[self.dice2_val-1], self.dice2_pos)
+            self.display.blit(self.result_line, self.result_linepos)
+            self.display.blit(self.quesses[self.dice_sum-2], (500, self.result_linepos.y))
+            self.display.blit(self.result_help, self.result_help_pos)
+
+            if self.dice_sum == self.quessnum+2:
+                self.display.blit(self.result_win, self.result_win_pos)
+            else:
+                self.display.blit(self.result_lose, self.result_lose_pos)
 
         # Draw updates onto display
         pygame.display.flip()
