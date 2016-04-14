@@ -14,7 +14,7 @@ Clone this repository, by running:
 ```
 git clone https://github.com/MiriPii/dicegame.git
 ```
-Install pygame, if don't have it:
+Install pygame, if you don't have it yet:
 
 Guidance for installing pygame can be found at:  
 http://www.pygame.org/download.shtml
