@@ -101,6 +101,7 @@ class MenuState(State):
         self.display.blit(self.quit, self.quitrect)
 
     def move(self, direction):
+        """ Helper function to move between menu elements"""
         if (direction == pygame.K_DOWN):
             self.hl_pos = 1
         elif (direction == pygame.K_UP):
