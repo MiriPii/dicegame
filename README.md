@@ -5,7 +5,7 @@ The game is rather simple dice simulation,
 where user tries to quess the sum of two dice.
 
 Program is written in Python 3.5.1.
-Visuals made with pygame.
+Visuals were made with pygame 1.9.2.
 
 ### Installation
 
@@ -17,11 +17,9 @@ git clone https://github.com/MiriPii/dicegame.git
 Guidance for installing pygame can be found at:
 http://www.pygame.org/download.shtml
 
-
 ### Description
 
 The given outline for the game:
-
 1. User quesses the sum of two dies.
 2. Program simulates the roll of the 2 dies.
 3. Program shows the sum and tells the player if he guessed right.
